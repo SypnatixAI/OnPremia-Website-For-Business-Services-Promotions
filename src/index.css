@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+  OnPremia design tokens.
+  Direction: calm, honest consulting. Near-black ink, a single indigo accent,
+  generous white. Deliberately not the dark-neon "AI" aesthetic.
+*/
+
+@theme {
+  /* ---- brand ---- */
+  --color-ink: #0b1020;
+  --color-ink-soft: #1a2138;
+  --color-slate-muted: #5b6478;
+  --color-indigo-brand: #4f46e5;
+  --color-indigo-deep: #4338ca;
+  --color-indigo-soft: #eef0fe;
+  --color-paper: #ffffff;
+  --color-paper-2: #f7f8fc;
+  --color-hairline: #e6e9f2;
+
+  /* ---- type ---- */
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ---- motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* shadcn/ui semantic tokens mapped onto the brand palette. */
+:root {
+  --radius: 0.5rem;
+
+  --background: #ffffff;
+  --foreground: #0b1020;
+  --card: #ffffff;
+  --card-foreground: #0b1020;
+  --popover: #ffffff;
+  --popover-foreground: #0b1020;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f7f8fc;
+  --secondary-foreground: #0b1020;
+  --muted: #f7f8fc;
+  --muted-foreground: #5b6478;
+  --accent: #eef0fe;
+  --accent-foreground: #4338ca;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --border: #e6e9f2;
+  --input: #e6e9f2;
+  --ring: #4f46e5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* clearance so anchored sections clear the sticky header */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/*
+  Above-the-fold entrance is CSS, not JS.
+
+  Framer Motion renders its `initial` state into the prerendered HTML, which
+  would leave the hero at opacity:0 until the bundle downloads and hydrates —
+  delaying LCP and blanking the page entirely if JS fails. CSS animation starts
+  at first paint instead, with no JS on the critical path.
+*/
+@keyframes op-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-beat {
+  animation: op-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-beat-1 { animation-delay: 0.06s; }
+.hero-beat-2 { animation-delay: 0.12s; }
+.hero-beat-3 { animation-delay: 0.18s; }
+.hero-beat-4 { animation-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-beat {
+    animation: none;
+  }
+}
