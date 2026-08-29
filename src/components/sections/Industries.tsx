@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Section, SectionHeading } from '@/components/common/Section'
 import { Reveal, hoverLift } from '@/components/motion/Reveal'
 import { useT } from '@/i18n/LocaleProvider'
+import { withBase } from '@/lib/site'
 
 const ICONS = [Factory, Car, Calculator, Stethoscope] as const
 
@@ -56,7 +57,7 @@ export function Industries() {
                 className="grid items-center gap-8 rounded-lg border border-[var(--color-hairline)] bg-[var(--color-paper)] p-6 md:p-8 lg:grid-cols-2 lg:gap-12 lg:p-10"
               >
                 <img
-                  src={tab.image}
+                  src={withBase(tab.image)}
                   alt={tab.imageAlt}
                   loading="lazy"
                   decoding="async"

@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+# `dist/` is gitignored on purpose, so there is no branch to serve from —
+# the site is built here and uploaded straight to Pages as an artifact.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let a newer push win.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Must run BEFORE the build: it reports where the site will be served
+      # from, and that decides the base path baked into the HTML.
+      #
+      # Today that is /<repo>/ on github.io. The day a custom domain is set in
+      # Settings -> Pages, this action reports `/` and https://onpremia.ca
+      # instead, and the next build picks it up on its own. No code to change.
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          VITE_SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

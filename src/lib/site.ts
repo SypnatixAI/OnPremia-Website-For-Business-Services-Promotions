@@ -2,7 +2,31 @@
  * Single place for every external URL and constant.
  */
 
-export const SITE_URL = 'https://onpremia.ca'
+/**
+ * Where the built site actually lives.
+ *
+ * `BASE_URL` is injected by Vite from the `base` in vite.config.ts and always
+ * ends with a slash: `/` on the real domain, `/<repo>/` on a GitHub Pages
+ * project site. `SITE_ORIGIN` is the scheme + host, handed in at build time by
+ * the Pages workflow, falling back to the production domain.
+ *
+ * Every root-relative path in the dictionaries stays written as `/assets/x`,
+ * and goes through `withBase()` on its way to the DOM.
+ */
+const BASE_URL: string = import.meta.env.BASE_URL
+
+export const SITE_ORIGIN: string = import.meta.env.VITE_SITE_ORIGIN ?? 'https://onpremia.ca'
+
+/** `/assets/hero.jpg` -> `/<repo>/assets/hero.jpg` */
+export function withBase(path: string) {
+  return `${BASE_URL}${path.replace(/^\//, '')}`
+}
+
+/** Absolute URL, for canonical / hreflang / Open Graph. */
+export function absoluteUrl(path: string) {
+  return `${SITE_ORIGIN}${withBase(path)}`
+}
+
 export const CONTACT_EMAIL = 'bonjour@onpremia.ca'
 
 /**

@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { withBase } from '@/lib/site'
 
 /**
  * Photograph slot.
@@ -33,7 +34,8 @@ export function Figure({
   if (src) {
     return (
       <img
-        src={src}
+        // Dictionary paths are root-relative; the base is applied here.
+        src={withBase(src)}
         alt={alt}
         className={cn('w-full rounded-lg object-cover', ratio, className)}
         loading={priority ? 'eager' : 'lazy'}

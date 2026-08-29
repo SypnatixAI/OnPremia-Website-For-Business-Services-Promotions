@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/s
 import { LocaleToggle } from './LocaleToggle'
 import { ThemeToggle } from './ThemeToggle'
 import { useLocale } from '@/i18n/LocaleProvider'
-import { bookingHref } from '@/lib/site'
+import { bookingHref, withBase } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
@@ -43,7 +43,7 @@ export function SiteHeader() {
       >
         <div className="mx-auto flex h-[68px] w-full max-w-6xl items-center justify-between gap-4 px-6 md:px-8">
           <a
-            href={`/${locale}/`}
+            href={withBase(`${locale}/`)}
             className="flex items-center gap-2 font-display text-[1.35rem] font-semibold tracking-tight text-[var(--color-ink)]"
           >
             <ShieldCheck

@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { LOCALES } from '@/i18n/types'
+import { withBase } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 /**
@@ -25,7 +26,7 @@ export function LocaleToggle({ className }: { className?: string }) {
         return (
           <a
             key={l}
-            href={`/${l}/${hash}`}
+            href={withBase(`${l}/${hash}`)}
             hrefLang={l === 'fr' ? 'fr-CA' : 'en-CA'}
             aria-current={active ? 'true' : undefined}
             aria-label={active ? undefined : t.localeToggle.switchTo}

@@ -1,7 +1,7 @@
 import { ShieldCheck } from 'lucide-react'
 import { Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { useLocale } from '@/i18n/LocaleProvider'
-import { CONTACT_EMAIL } from '@/lib/site'
+import { CONTACT_EMAIL, withBase } from '@/lib/site'
 
 export function SiteFooter() {
   const { locale, t } = useLocale()
@@ -13,7 +13,7 @@ export function SiteFooter() {
         <Stagger className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <StaggerItem>
             <a
-              href={`/${locale}/`}
+              href={withBase(`${locale}/`)}
               className="flex items-center gap-2 font-display text-xl font-semibold text-[var(--color-ink)]"
             >
               <ShieldCheck

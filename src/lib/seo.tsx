@@ -1,7 +1,7 @@
 import { Head } from 'vite-react-ssg'
 import { getDictionary } from '@/i18n/LocaleProvider'
 import { LOCALES, type Locale } from '@/i18n/types'
-import { SITE_URL } from './site'
+import { absoluteUrl } from './site'
 
 const HREFLANG: Record<Locale, string> = { fr: 'fr-CA', en: 'en-CA' }
 
@@ -12,7 +12,7 @@ const HREFLANG: Record<Locale, string> = { fr: 'fr-CA', en: 'en-CA' }
  */
 export function SeoHead({ locale }: { locale: Locale }) {
   const t = getDictionary(locale)
-  const canonical = `${SITE_URL}/${locale}/`
+  const canonical = absoluteUrl(`${locale}/`)
 
   return (
     <Head>
@@ -25,9 +25,9 @@ export function SeoHead({ locale }: { locale: Locale }) {
       <link rel="canonical" href={canonical} />
 
       {LOCALES.map((l) => (
-        <link key={l} rel="alternate" hrefLang={HREFLANG[l]} href={`${SITE_URL}/${l}/`} />
+        <link key={l} rel="alternate" hrefLang={HREFLANG[l]} href={absoluteUrl(`${l}/`)} />
       ))}
-      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}/fr/`} />
+      <link rel="alternate" hrefLang="x-default" href={absoluteUrl('fr/')} />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonical} />
@@ -41,7 +41,7 @@ export function SeoHead({ locale }: { locale: Locale }) {
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'OnPremia',
-          url: SITE_URL,
+          url: absoluteUrl(''),
           description: t.meta.description,
           areaServed: ['Quebec', 'Ontario'],
         })}
