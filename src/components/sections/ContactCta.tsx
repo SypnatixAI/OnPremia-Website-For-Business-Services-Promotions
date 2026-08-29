@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Section } from '@/components/common/Section'
+import { CtaArrow } from '@/components/common/CtaArrow'
 import { Reveal } from '@/components/motion/Reveal'
 import { useT } from '@/i18n/LocaleProvider'
 import { bookingHref, CONTACT_ENDPOINT, CONTACT_EMAIL, hasValue } from '@/lib/site'
@@ -66,7 +67,7 @@ export function ContactCta() {
   }
 
   return (
-    <Section id="contact" tone="ink">
+    <Section id="contact" tone="feature">
       <div className="grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-start">
         <Reveal>
           <p className="text-xs font-semibold tracking-[0.14em] text-indigo-300 uppercase">
@@ -79,10 +80,10 @@ export function ContactCta() {
             {t.contact.lead}
           </p>
 
-          <Button asChild size="lg" className="mt-8 bg-white text-[var(--color-ink)] hover:bg-slate-100">
+          <Button asChild size="lg" className="group mt-8 bg-white text-[var(--color-feature)] hover:bg-slate-100">
             <a href={bookingHref()}>
               {t.contact.ctaPrimary}
-              <ArrowRight aria-hidden strokeWidth={2} className="size-4" />
+              <CtaArrow />
             </a>
           </Button>
 

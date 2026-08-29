@@ -1,4 +1,5 @@
 import { ShieldCheck } from 'lucide-react'
+import { Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { CONTACT_EMAIL } from '@/lib/site'
 
@@ -7,10 +8,10 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-[var(--color-hairline)] bg-white">
+    <footer className="border-t border-[var(--color-hairline)] bg-[var(--color-paper)]">
       <div className="mx-auto w-full max-w-6xl px-6 py-14 md:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
+        <Stagger className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+          <StaggerItem>
             <a
               href={`/${locale}/`}
               className="flex items-center gap-2 font-display text-xl font-semibold text-[var(--color-ink)]"
@@ -22,13 +23,14 @@ export function SiteFooter() {
               />
               OnPremia
             </a>
+            {/* The brand signature, verbatim. */}
             <p className="mt-3 max-w-[38ch] text-sm text-[var(--color-slate-muted)]">
-              {t.footer.tagline}
+              {t.signature}
             </p>
             <p className="mt-2 text-sm text-[var(--color-slate-muted)]">{t.footer.region}</p>
-          </div>
+          </StaggerItem>
 
-          <div>
+          <StaggerItem>
             <h2 className="font-display text-sm font-semibold text-[var(--color-ink)]">
               {t.footer.nav}
             </h2>
@@ -44,9 +46,9 @@ export function SiteFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </StaggerItem>
 
-          <div>
+          <StaggerItem>
             <h2 className="font-display text-sm font-semibold text-[var(--color-ink)]">
               {t.footer.contactHeading}
             </h2>
@@ -57,8 +59,8 @@ export function SiteFooter() {
             >
               {CONTACT_EMAIL}
             </a>
-          </div>
-        </div>
+          </StaggerItem>
+        </Stagger>
 
         <div className="mt-12 border-t border-[var(--color-hairline)] pt-6">
           <p className="text-xs text-[var(--color-slate-muted)]">

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { m, useScroll } from 'motion/react'
 import { Menu, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { LocaleToggle } from './LocaleToggle'
+import { ThemeToggle } from './ThemeToggle'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { bookingHref } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -11,6 +13,7 @@ export function SiteHeader() {
   const { locale, t } = useLocale()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -25,7 +28,7 @@ export function SiteHeader() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-[var(--color-ink)] focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-[var(--color-feature)] focus:px-4 focus:py-2 focus:text-sm focus:text-white"
       >
         {t.nav.skipToContent}
       </a>
@@ -34,8 +37,8 @@ export function SiteHeader() {
         className={cn(
           'sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300',
           scrolled
-            ? 'border-[var(--color-hairline)] bg-white/90 shadow-[0_1px_20px_-12px_rgba(11,16,32,0.35)] backdrop-blur-md'
-            : 'border-transparent bg-white/70 backdrop-blur-sm',
+            ? 'border-[var(--color-hairline)] bg-[var(--color-paper)]/90 shadow-[0_1px_20px_-12px_rgba(11,16,32,0.35)] backdrop-blur-md'
+            : 'border-transparent bg-[var(--color-paper)]/70 backdrop-blur-sm',
         )}
       >
         <div className="mx-auto flex h-[68px] w-full max-w-6xl items-center justify-between gap-4 px-6 md:px-8">
@@ -56,14 +59,17 @@ export function SiteHeader() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-[var(--color-slate-muted)] transition-colors hover:text-[var(--color-ink)]"
+                /* `.nav-underline` wipes a 1.5px rule in from the left on
+                   hover/focus — transform-only, and flat for reduced motion. */
+                className="nav-underline text-sm font-medium text-[var(--color-slate-muted)] transition-colors hover:text-[var(--color-ink)]"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <LocaleToggle />
             <Button asChild size="sm" className="hidden sm:inline-flex">
               <a href={href}>{t.nav.cta}</a>
@@ -103,6 +109,17 @@ export function SiteHeader() {
             </Sheet>
           </div>
         </div>
+
+        {/*
+          Reading progress. Driven straight off the scroll position rather than
+          animated, so it costs one composited transform and nothing else — and
+          it is a response to the visitor's own action, not decoration.
+        */}
+        <m.div
+          aria-hidden
+          style={{ scaleX: scrollYProgress }}
+          className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-[var(--color-indigo-brand)]"
+        />
       </header>
     </>
   )

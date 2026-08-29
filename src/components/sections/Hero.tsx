@@ -1,9 +1,12 @@
-import { ArrowRight, Lock } from 'lucide-react'
+import { Languages, PlayCircle, Scale, Server, ShieldCheck } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Figure } from '@/components/common/Figure'
+import { CtaArrow } from '@/components/common/CtaArrow'
 import { useT } from '@/i18n/LocaleProvider'
 import { bookingHref } from '@/lib/site'
+
+const CHIP_ICONS = [ShieldCheck, Scale, Server, Languages] as const
 
 /**
  * The hero entrance is CSS (`hero-beat`), deliberately not Framer Motion.
@@ -18,7 +21,7 @@ export function Hero() {
   const href = bookingHref()
 
   return (
-    <section className="relative overflow-hidden border-b border-[var(--color-hairline)] bg-white">
+    <section className="relative overflow-hidden border-b border-[var(--color-hairline)] bg-[var(--color-paper)]">
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 md:px-8 md:py-28 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p className="hero-beat text-xs font-semibold tracking-[0.14em] text-[var(--color-indigo-brand)] uppercase">
@@ -29,48 +32,58 @@ export function Hero() {
             {t.hero.headline}
           </h1>
 
-          <p className="hero-beat hero-beat-2 mt-6 max-w-[52ch] text-lg leading-relaxed text-[var(--color-slate-muted)]">
+          <p className="hero-beat hero-beat-2 mt-6 max-w-[50ch] text-lg leading-relaxed text-[var(--color-slate-muted)]">
             {t.hero.subhead}
           </p>
 
+          {/* One primary action. The secondary is a low-commitment look at the
+              product for anyone not ready to talk to a human yet. */}
           <div className="hero-beat hero-beat-3 mt-9 flex flex-wrap items-center gap-4">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="group">
               <a href={href}>
                 {t.hero.ctaPrimary}
-                <ArrowRight aria-hidden strokeWidth={2} className="size-4" />
+                <CtaArrow />
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="#contact">{t.hero.ctaSecondary}</a>
+              <a href="#demo">
+                <PlayCircle aria-hidden strokeWidth={2} className="size-4" />
+                {t.hero.ctaSecondary}
+              </a>
             </Button>
           </div>
 
           <ul className="hero-beat hero-beat-4 mt-10 flex flex-wrap gap-2.5">
-            {t.hero.chips.map((chip) => (
-              <li key={chip}>
-                <Badge
-                  variant="secondary"
-                  className="gap-1.5 border border-[var(--color-hairline)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--color-slate-muted)]"
-                >
-                  <Lock
-                    aria-hidden
-                    strokeWidth={2}
-                    className="size-3 text-[var(--color-indigo-brand)]"
-                  />
-                  {chip}
-                </Badge>
-              </li>
-            ))}
+            {t.hero.chips.map((chip, i) => {
+              const Icon = CHIP_ICONS[i] ?? ShieldCheck
+              return (
+                <li key={chip}>
+                  <Badge
+                    variant="secondary"
+                    className="gap-1.5 border border-[var(--color-hairline)] bg-[var(--color-paper)] px-3 py-1.5 text-xs font-medium text-[var(--color-slate-muted)] transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  >
+                    <Icon
+                      aria-hidden
+                      strokeWidth={2}
+                      className="size-3 text-[var(--color-indigo-brand)]"
+                    />
+                    {chip}
+                  </Badge>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
         <div className="hero-beat hero-beat-2">
-          {/* Add `src="/images/hero.avif"` once the photograph exists — it then
-              renders eager + fetchPriority high as the LCP candidate. */}
+          {/* `priority` makes this eager + fetchPriority high: it is the LCP
+              element. `object-bottom` keeps the subject in frame — the source
+              is taller than the 4/5 box and the top of it is empty wall. */}
           <Figure
-            subject={t.hero.imageQuery}
+            src={t.hero.image}
             alt={t.hero.imageAlt}
             ratio="aspect-[4/5]"
+            className="object-bottom"
             priority
           />
         </div>

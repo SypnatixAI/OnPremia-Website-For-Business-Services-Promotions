@@ -20,8 +20,11 @@ page ladders back to that.
 **Never invent content.** No fabricated case studies, client names, testimonials,
 statistics, certifications, or people. If real content is missing, ship an
 honest empty state or a labelled gap — never a plausible-sounding placeholder
-that could be mistaken for fact. This applies especially to the founders
-section and `Proof.tsx`.
+that could be mistaken for fact. This applies especially to `Proof.tsx`.
+
+The first-person lines in `Industries.tsx` (the pain quote and the result
+line) are **illustrative, not testimonials**. They are attributed to nobody
+and must never be presented as coming from a named client.
 
 **Never strengthen the sovereignty wording.** The copy says *"dans votre
 périmètre"* and never "your data never leaves your infrastructure", because
@@ -118,18 +121,50 @@ nothing is broken while they're unset:
 
 Content gaps:
 
-- **4th co-founder.** Three real names are listed; the brief mentions four.
-  Add an object to `founders.members` in both dictionaries — the grid adjusts.
-- **Founder portraits.** Set `photo: '/images/founders/<x>.avif'`. Cards show
-  initials until then. Never substitute stock photography for founder faces.
-- **Case studies.** `Proof.tsx` offers references rather than claiming results.
+- **Team section.** Removed on purpose — there is no founders block and
+  nothing stands in its place. Do not reintroduce one without real names and
+  real portraits shot in one sitting. Never stock photography for faces.
+- **Case studies.** `Proof.tsx` is one honest sentence offering references.
+- **Demo.** `Demo.tsx` holds a 16/9 panel; drop in a self-hosted video or a
+  still capture and the reserved space means no layout shift.
 - **Photography.** `<Figure>` renders a designed panel until given `src`.
-  Unsplash queries are in comments beside each `imageQuery`.
+  Queries are in comments beside each `imageQuery` — they are deliberately
+  human and result-led (a business owner, a team at work), not server racks.
 
-The adoption statistic in `Problem.tsx` **is real**: Statistics Canada,
-*Canadian Survey on Business Conditions*, Q2 2026 — 13.4% cite
-cybersecurity/privacy as a barrier; adoption tripled to 19.2% since 2024.
-Replace only with another sourced figure.
+Both facts in `Problem.tsx` **are real and cited**, and each link points at the
+report itself rather than at press coverage of it:
+
+- **77%** of employees using AI paste company data into it, 82% of that through
+  personal accounts — LayerX, *Enterprise AI & SaaS Data Security Report 2025*.
+- Canada ranks among the least trusting countries toward AI — KPMG
+  International & University of Melbourne, *Trust, Attitudes and Use of
+  Artificial Intelligence: A Global Study 2025*.
+
+They are the only numbers on the page. Replace only with another sourced
+figure, keep `value`/`suffix` numeric so `<CountUp>` can animate it, and note
+that `claim` **continues the sentence the figure starts** — the two are
+rendered as one line, so `claim` must not repeat the number.
+
+The two coefficients in `src/lib/savings.ts` behind the time calculator are
+**assumptions, not measurements**. They are printed under the sliders so a
+visitor can judge them; if they change, change the sentence in both
+dictionaries too.
+
+## Theming
+
+Light and dark, class-driven: the inline script in `index.html` reads
+`localStorage['onpremia-theme']`, falls back to `prefers-color-scheme`, and
+sets `.dark` on `<html>` **before first paint** — mandatory, since the pages
+are prerendered and would otherwise flash. `ThemeToggle` writes the same key.
+
+All colours live in `:root` / `.dark` in `src/index.css`, not in `@theme`,
+because components read them as `var(--color-x)` in arbitrary values.
+
+`--color-feature` is the dark navy behind the sovereignty, calculator and
+contact blocks. It stays dark in **both** themes, so the white text on it is
+always correct. It doubles as the text colour on permanently white surfaces
+(a white button), which `--color-ink` cannot do once it flips. Never use
+`--color-ink` as a background.
 
 ## Environment gotchas on this machine
 

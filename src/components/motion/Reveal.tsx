@@ -1,4 +1,4 @@
-import { m, type Variants } from 'motion/react'
+import { m, type TargetAndTransition, type Variants } from 'motion/react'
 import type { ElementType, ReactNode } from 'react'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -18,6 +18,19 @@ export const staggerVariants: Variants = {
   visible: {
     transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
+}
+
+/**
+ * Discreet card lift on hover. Transform-only, and the transition lives inside
+ * the target so it can't override the entrance transition on the variants.
+ *
+ * `MotionConfig reducedMotion="user"` drops the transform for anyone who asked
+ * for reduced motion — no separate media query needed here.
+ */
+export const hoverLift: TargetAndTransition = {
+  scale: 1.02,
+  y: -2,
+  transition: { duration: 0.18, ease: EASE },
 }
 
 /**
@@ -79,9 +92,18 @@ export function Stagger({
   )
 }
 
-export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+/** `hover` adds the card lift. Leave it off for anything that isn't a card. */
+export function StaggerItem({
+  children,
+  className,
+  hover = false,
+}: {
+  children: ReactNode
+  className?: string
+  hover?: boolean
+}) {
   return (
-    <m.div className={className} variants={revealVariants}>
+    <m.div className={className} variants={revealVariants} whileHover={hover ? hoverLift : undefined}>
       {children}
     </m.div>
   )

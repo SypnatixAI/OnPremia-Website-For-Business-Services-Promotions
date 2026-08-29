@@ -2,35 +2,50 @@
 @import "tw-animate-css";
 
 /*
-  OnPremia design tokens.
-  Direction: calm, honest consulting. Near-black ink, a single indigo accent,
-  generous white. Deliberately not the dark-neon "AI" aesthetic.
+  Dark mode is class-driven, not media-driven: a visitor can override the OS
+  preference and we persist the choice. The inline script in index.html sets
+  the class before first paint so the prerendered page never flashes.
 */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/*
+  OnPremia design tokens.
+  Direction: calm, honest consulting. A single indigo accent, generous air.
+  Deliberately not the dark-neon "AI" aesthetic — even in dark mode.
+
+  Colours live in :root / .dark rather than @theme because every component
+  reads them as `var(--color-x)` in an arbitrary value. Only tokens that need
+  to generate a utility class (fonts, easing) belong in @theme.
+*/
 @theme {
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+
   /* ---- brand ---- */
-  --color-ink: #0b1020;
-  --color-ink-soft: #1a2138;
+  --color-ink: #0b1020; /* primary text — flips in dark mode */
   --color-slate-muted: #5b6478;
   --color-indigo-brand: #4f46e5;
   --color-indigo-deep: #4338ca;
   --color-indigo-soft: #eef0fe;
-  --color-paper: #ffffff;
-  --color-paper-2: #f7f8fc;
+  --color-paper: #ffffff; /* page surface */
+  --color-paper-2: #f7f8fc; /* tinted section surface */
   --color-hairline: #e6e9f2;
 
-  /* ---- type ---- */
-  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /*
+    The dark navy stays dark in BOTH themes: it is the feature surface behind
+    the sovereignty, calculator and contact blocks. It doubles as the text
+    colour for anything sitting on a permanently white surface (a white
+    button), which `--color-ink` can't do once it flips.
+  */
+  --color-feature: #0b1020;
 
-  /* ---- motion ---- */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* shadcn/ui semantic tokens mapped onto the brand palette. */
-:root {
+  /* ---- shadcn/ui semantic tokens ---- */
   --radius: 0.5rem;
-
   --background: #ffffff;
   --foreground: #0b1020;
   --card: #ffffff;
@@ -50,6 +65,42 @@
   --border: #e6e9f2;
   --input: #e6e9f2;
   --ring: #4f46e5;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-ink: #eef1f8;
+  --color-slate-muted: #9aa4bd;
+  --color-indigo-brand: #8b87f5;
+  --color-indigo-deep: #a9a5f9;
+  --color-indigo-soft: #1e2242;
+  --color-paper: #0e1424;
+  --color-paper-2: #131a2e;
+  --color-hairline: #232b45;
+
+  /* A shade below --color-paper, so feature blocks still read as a step down. */
+  --color-feature: #070c1a;
+
+  --background: #0e1424;
+  --foreground: #eef1f8;
+  --card: #131a2e;
+  --card-foreground: #eef1f8;
+  --popover: #131a2e;
+  --popover-foreground: #eef1f8;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #1a2237;
+  --secondary-foreground: #eef1f8;
+  --muted: #1a2237;
+  --muted-foreground: #9aa4bd;
+  --accent: #1e2242;
+  --accent-foreground: #a9a5f9;
+  --destructive: #f0554a;
+  --destructive-foreground: #0e1424;
+  --border: #232b45;
+  --input: #2b3450;
+  --ring: #8b87f5;
 }
 
 @theme inline {
@@ -142,6 +193,33 @@
 .hero-beat-3 { animation-delay: 0.18s; }
 .hero-beat-4 { animation-delay: 0.24s; }
 
+/*
+  Animated underline for the nav. Transform-only, so it composites on the GPU
+  and costs nothing; the rule collapses to a plain instant underline when the
+  visitor asked for reduced motion.
+*/
+.nav-underline {
+  position: relative;
+}
+
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1.5px;
+  background-color: var(--color-indigo-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-underline:hover::after,
+.nav-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -149,5 +227,9 @@
 
   .hero-beat {
     animation: none;
+  }
+
+  .nav-underline::after {
+    transition: none;
   }
 }

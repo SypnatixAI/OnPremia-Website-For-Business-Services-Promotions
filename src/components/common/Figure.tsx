@@ -3,12 +3,12 @@ import { cn } from '@/lib/utils'
 /**
  * Photograph slot.
  *
- * Pass `src` and it renders a real <img> with explicit dimensions (so it
- * reserves space and can't cause layout shift), lazy below the fold and
- * eager+high-priority for the hero.
+ * With `src` it renders a real <img> in a ratio box, so the space is reserved
+ * and swapping the file can't shift the layout. Lazy below the fold,
+ * eager + high priority for the hero.
  *
  * With no `src` it renders a designed panel rather than a dashed placeholder
- * box — the page reads as finished during review — while still showing the
+ * box — the page reads as finished during review — while still naming the
  * intended subject so the slot is obviously a slot.
  */
 export function Figure({
@@ -20,11 +20,11 @@ export function Figure({
   priority = false,
   invert = false,
 }: {
-  /** Drop a file in /public/images and point here to go live. */
+  /** Path under /public. */
   src?: string
   alt: string
-  /** Shown when there's no image yet; also the Unsplash search to run. */
-  subject: string
+  /** Only used when there is no image yet: describes the intended subject. */
+  subject?: string
   className?: string
   ratio?: string
   priority?: boolean

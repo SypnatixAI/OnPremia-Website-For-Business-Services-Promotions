@@ -3,7 +3,29 @@
   <head>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1424" media="(prefers-color-scheme: dark)" />
+
+    <!--
+      Theme, applied before first paint.
+
+      The pages are prerendered static HTML, so without this the light version
+      would paint first and flash to dark on hydration. Stored choice wins over
+      the OS preference; no choice means follow the OS.
+    -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('onpremia-theme')
+          var dark =
+            stored === 'dark' ||
+            (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {
+          /* private mode, blocked storage — light is a fine default */
+        }
+      })()
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

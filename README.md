@@ -91,17 +91,19 @@ degrades to something sensible. These are the real gaps:
 
 **Content that can't be invented:**
 
-- **4th co-founder.** Three are listed. Add a fourth object to
-  `founders.members` in both dictionaries; the grid adjusts on its own.
-- **Founder portraits.** Set `photo: '/images/founders/<name>.avif'`. Until
-  then cards show initials. Never substitute stock photography here.
 - **Case studies.** `Proof.tsx` offers references instead of claiming results.
   Each real study needs: client, problem, what was built, one measured
   outcome, and written permission to be named.
+- **Demo video.** `Demo.tsx` holds a 16/9 panel. Self-host the file rather
+  than embedding a third-party player — the pitch is about not handing data
+  to vendors.
 - **Photography.** `<Figure>` renders a designed panel until given a `src`.
   Drop files in `public/images/` and pass `src` — the hero one should be
-  `priority` so it stays the LCP element. Unsplash queries are in comments
-  beside each `imageQuery`.
+  `priority` so it stays the LCP element. Queries are in comments beside each
+  `imageQuery`; they are human and result-led on purpose, not hardware.
+
+There is **no team section**: it was removed deliberately and nothing replaces
+it. Do not add founder cards back without real names and real portraits.
 
 **Already real:** the adoption statistic in the problem section cites
 Statistics Canada, *Canadian Survey on Business Conditions*, Q2 2026

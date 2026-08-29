@@ -23,26 +23,42 @@ export type NavLink = {
   label: string
 }
 
-export type ProblemCard = {
+/** Result-first card: what the client walks away with, never a feature. */
+export type OutcomeCard = {
   title: string
   body: string
 }
 
-/** Real, cited figure. Never populate this with an unsourced number. */
+/**
+ * Real, cited figure. Never populate this with an unsourced number.
+ * `value` is numeric so the counter can animate to it; `suffix` carries the
+ * unit with its French spacing. `claim` continues the sentence the figure
+ * starts, so the two read as one line.
+ */
 export type Stat = {
-  figure: string
+  value: number
+  suffix: string
   claim: string
-  context: string
   source: string
   sourceUrl: string
 }
 
+/**
+ * A cited claim with no headline figure. Same rule as `Stat`: it never ships
+ * without a source, and the link points at the report itself.
+ */
+export type SourcedClaim = {
+  claim: string
+  source: string
+  sourceUrl: string
+}
+
+/** Title is the result, `gain` is what it buys. No description line — if the
+ *  title needs explaining, the title is wrong. */
 export type ServiceCard = {
   eyebrow: string
   title: string
-  body: string
-  output: string
-  bestFor: string
+  gain: string
 }
 
 export type ComparisonRow = {
@@ -56,24 +72,32 @@ export type ProcessPhase = {
   step: string
   title: string
   body: string
-  deliverable: string
+}
+
+/**
+ * One automation, said the way a client would say it, plus what it buys them.
+ * `label` names what stops being done by hand — never the technique behind it.
+ * `gain` is the payoff. If `gain` restates `label`, one of the two is wrong.
+ */
+export type IndustryBenefit = {
+  label: string
+  gain: string
 }
 
 export type IndustryTab = {
   id: string
   label: string
+  /**
+   * Illustrative first-person pain line. NOT a testimonial: it is attributed
+   * to nobody and must never be presented as a quote from a named client.
+   */
   quote: string
-  bullets: Tuple3<string>
+  benefits: Tuple4<IndustryBenefit>
   outcome: string
-}
-
-export type Founder = {
-  name: string
-  role: string
-  focus: string
-  linkedIn: string | null
-  /** Real portrait only. Null renders initials — never stock photography. */
-  photo: string | null
+  /** Path under /public. All four are cropped square, so they stay consistent. */
+  image: string
+  /** Describes what is actually in the photo, per locale. */
+  imageAlt: string
 }
 
 export type FaqItem = {

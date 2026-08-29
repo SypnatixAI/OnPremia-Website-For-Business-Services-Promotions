@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react'
+import { m } from 'motion/react'
 import { Section, SectionHeading } from '@/components/common/Section'
 import { Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { useT } from '@/i18n/LocaleProvider'
@@ -11,10 +12,10 @@ export function Process() {
       <SectionHeading eyebrow={t.process.eyebrow} title={t.process.title} lead={t.process.lead} />
 
       {/* Numbering is real here: the phases are sequential and gated. */}
-      <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
+      <Stagger className="mt-16 grid gap-6 md:grid-cols-3">
         {t.process.phases.map((phase, i) => (
-          <StaggerItem key={phase.step}>
-            <div className="relative h-full rounded-lg border border-[var(--color-hairline)] bg-white p-6">
+          <StaggerItem key={phase.step} hover>
+            <div className="relative h-full rounded-lg border border-[var(--color-hairline)] bg-[var(--color-paper)] p-7">
               <div className="flex items-baseline gap-3">
                 <span className="font-mono text-sm font-medium text-[var(--color-indigo-brand)]">
                   {phase.step}
@@ -24,16 +25,24 @@ export function Process() {
 
               <p className="mt-4 text-[var(--color-slate-muted)]">{phase.body}</p>
 
-              <p className="mt-5 border-l-2 border-[var(--color-indigo-brand)] pl-3 text-sm font-medium text-[var(--color-ink)]">
-                {phase.deliverable}
-              </p>
-
+              {/* Slides in from the card it leaves, so the three phases read
+                  as a sequence rather than three boxes. */}
               {i < t.process.phases.length - 1 ? (
-                <ArrowRight
+                <m.span
                   aria-hidden
-                  strokeWidth={2}
-                  className="absolute top-1/2 -right-[19px] hidden size-5 -translate-y-1/2 text-[var(--color-hairline)] md:block"
-                />
+                  /* y stays in the motion target: an inline transform would
+                     otherwise wipe out a `-translate-y-1/2` class. */
+                  initial={{ opacity: 0, x: -6, y: '-50%' }}
+                  whileInView={{ opacity: 1, x: 0, y: '-50%' }}
+                  viewport={{ once: true, amount: 'some' }}
+                  transition={{ duration: 0.4, delay: 0.25 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute top-1/2 -right-[19px] hidden md:block"
+                >
+                  <ArrowRight
+                    strokeWidth={2}
+                    className="size-5 text-[var(--color-hairline)]"
+                  />
+                </m.span>
               ) : null}
             </div>
           </StaggerItem>

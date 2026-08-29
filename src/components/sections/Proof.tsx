@@ -1,40 +1,33 @@
-import { FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Section, SectionHeading } from '@/components/common/Section'
+import { Section } from '@/components/common/Section'
 import { Reveal } from '@/components/motion/Reveal'
 import { useT } from '@/i18n/LocaleProvider'
 
 /**
- * Deliberately empty of content.
+ * Deliberately one sentence.
  *
- * The brief forbids inventing case studies, client names or results, and no
- * real ones have been supplied. Showing an honest empty state is better than
- * shipping fabricated proof — especially for a firm selling trust.
+ * PLACEHOLDER : à fournir par Luc — études de cas, logos clients, témoignages.
+ * Pour chaque étude : le client (avec autorisation écrite d'être nommé), le
+ * problème, ce qui a été bâti, un résultat mesuré. Rien d'inventé ici, jamais.
+ * Tant qu'il n'y a rien de réel, une phrase honnête vaut mieux qu'un mur de
+ * logos empruntés.
  */
 export function Proof() {
   const t = useT()
 
   return (
-    <Section id="realisations" tone="tinted">
-      <SectionHeading eyebrow={t.proof.eyebrow} title={t.proof.title} lead={t.proof.lead} />
-
-      <Reveal className="mt-10">
-        <div className="rounded-lg border border-[var(--color-hairline)] bg-white p-8 md:p-10">
-          <FileText
-            aria-hidden
-            strokeWidth={2}
-            className="size-6 text-[var(--color-indigo-brand)]"
-          />
-          {/* PLACEHOLDER: case studies — Luc to provide, per study:
-              client name (with written permission), the problem, what was built,
-              one measured result, and whether the client agrees to be named. */}
-          <p className="mt-4 max-w-[60ch] text-[var(--color-slate-muted)]">
-            {t.proof.placeholderNote}
-          </p>
-          <Button asChild variant="outline" className="mt-6">
-            <a href="#contact">{t.proof.askCta}</a>
-          </Button>
-        </div>
+    <Section id="realisations">
+      <Reveal className="mx-auto max-w-3xl text-center">
+        <p className="text-xs font-semibold tracking-[0.14em] text-[var(--color-indigo-brand)] uppercase">
+          {t.proof.eyebrow}
+        </p>
+        <h2 className="mt-4 text-3xl text-[var(--color-ink)] md:text-4xl">{t.proof.title}</h2>
+        <p className="mx-auto mt-5 max-w-[52ch] text-lg leading-relaxed text-[var(--color-slate-muted)]">
+          {t.proof.lead}
+        </p>
+        <Button asChild variant="outline" className="mt-8">
+          <a href="#contact">{t.proof.askCta}</a>
+        </Button>
       </Reveal>
     </Section>
   )

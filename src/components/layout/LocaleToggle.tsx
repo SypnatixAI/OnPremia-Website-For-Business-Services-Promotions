@@ -28,10 +28,11 @@ export function LocaleToggle({ className }: { className?: string }) {
             href={`/${l}/${hash}`}
             hrefLang={l === 'fr' ? 'fr-CA' : 'en-CA'}
             aria-current={active ? 'true' : undefined}
+            aria-label={active ? undefined : t.localeToggle.switchTo}
             className={cn(
               'rounded px-2.5 py-1 text-xs font-semibold tracking-wide transition-colors',
               active
-                ? 'bg-[var(--color-ink)] text-white'
+                ? 'bg-[var(--color-feature)] text-white'
                 : 'text-[var(--color-slate-muted)] hover:text-[var(--color-ink)]',
             )}
           >
