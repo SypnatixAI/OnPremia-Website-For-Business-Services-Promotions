@@ -22,6 +22,7 @@ function Slider({
   value,
   onChange,
   display,
+  note,
   min,
   max,
   step,
@@ -30,11 +31,15 @@ function Slider({
   value: number
   onChange: (next: number) => void
   display: string
+  /** Clarifies what the number is. Wired to the input with aria-describedby,
+   *  so a screen reader hears it as part of the field, not as loose text. */
+  note?: string
   min: number
   max: number
   step: number
 }) {
   const id = useId()
+  const noteId = `${id}-note`
 
   return (
     <div>
@@ -54,16 +59,26 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
+        aria-describedby={note ? noteId : undefined}
         // Native range control, tinted with accent-color. `appearance-none`
         // would also strip the thumb in WebKit and need rebuilding by hand.
         className="mt-3 w-full cursor-pointer accent-[var(--color-indigo-brand)]"
       />
+      {note ? (
+        <p id={noteId} className="mt-2 text-xs leading-relaxed text-[var(--color-slate-muted)]">
+          {note}
+        </p>
+      ) : null}
     </div>
   )
 }
 
 /**
- * Time-saved estimator.
+ * Time-saved estimator. Every number on screen belongs to the VISITOR'S
+ * company — their email volume, their admin hours, what an hour of their
+ * staff's time costs them — and every label says so. Nothing here is an
+ * OnPremia price. The hourly-cost field carries an explicit note for that
+ * reason: it is the one number a reader can mistake for our rate.
  *
  * The two coefficients behind the number live in `lib/savings.ts` and are
  * spelled out under the result — an estimate a visitor can't audit is just a
@@ -109,6 +124,8 @@ export function Calculator() {
                 value={hourlyRate}
                 onChange={setHourlyRate}
                 display={formatMoney(hourlyRate, locale)}
+                // Mandatory: without it, "35 $" reads as an OnPremia rate.
+                note={c.rateNote}
                 {...RANGES.hourlyRate}
               />
             </div>

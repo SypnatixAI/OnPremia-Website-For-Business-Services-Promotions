@@ -303,14 +303,21 @@ export const fr = {
 
   calculator: {
     eyebrow: 'Estimation',
-    title: 'Combien de temps vous récupérez.',
-    lead: 'Deux chiffres. Ajustez-les à votre réalité.',
-    emailsLabel: 'Courriels traités par semaine',
-    adminLabel: 'Heures d’administration par semaine',
-    rateLabel: 'Coût horaire moyen chargé',
-    weeklyLabel: 'Heures récupérées par semaine',
+    /*
+      Tout ici parle de l’entreprise du visiteur, jamais d’OnPremia : ce sont
+      SES chiffres qui entrent et SON gain qui sort. `rateNote` n’est pas
+      décoratif — sans lui, « 35 $ » se lit comme un tarif OnPremia, et le
+      calculateur dit alors le contraire de ce qu’il calcule.
+    */
+    title: 'Combien votre entreprise pourrait récupérer.',
+    lead: 'Entrez vos chiffres. L’estimation s’ajuste à votre réalité.',
+    emailsLabel: 'Courriels traités par semaine dans votre entreprise',
+    adminLabel: 'Heures d’administration par semaine dans votre équipe',
+    rateLabel: 'Coût horaire moyen de vos employés (salaire chargé)',
+    rateNote: 'Le coût d’une heure de travail dans votre entreprise, pas un tarif OnPremia.',
+    weeklyLabel: 'Heures récupérées par votre équipe, par semaine',
     yearlyLabel: 'Par année',
-    valueLabel: 'Valeur annuelle',
+    valueLabel: 'Valeur annuelle pour votre entreprise',
     hoursUnit: 'h',
     assumptions:
       'Hypothèse : 2 minutes économisées par courriel et 30 % du temps administratif automatisé.',
