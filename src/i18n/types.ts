@@ -12,6 +12,7 @@ export function isLocale(value: string): value is Locale {
 export type Tuple2<T> = readonly [T, T]
 export type Tuple3<T> = readonly [T, T, T]
 export type Tuple4<T> = readonly [T, T, T, T]
+export type Tuple5<T> = readonly [T, T, T, T, T]
 
 export type DeploymentMode = {
   label: string
@@ -53,12 +54,17 @@ export type SourcedClaim = {
   sourceUrl: string
 }
 
-/** Title is the result, `gain` is what it buys. No description line — if the
- *  title needs explaining, the title is wrong. */
+/**
+ * Title is the result the client gets, `gain` is what it buys. `examples` is
+ * the evidence: each line must describe a COMPLETE business process, first
+ * request to closed file — never a single isolated gesture, never a technique.
+ * Length is fixed per card by a tuple in fr.ts, so EN cannot ship fewer.
+ */
 export type ServiceCard = {
   eyebrow: string
   title: string
   gain: string
+  examples: readonly string[]
 }
 
 export type ComparisonRow = {

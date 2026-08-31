@@ -13,6 +13,7 @@ import type {
   Tuple2,
   Tuple3,
   Tuple4,
+  Tuple5,
 } from './types'
 
 /**
@@ -156,28 +157,64 @@ export const fr = {
     eyebrow: 'Ce qu’on installe',
     title: 'Quatre systèmes qui travaillent pour vous.',
     lead: 'Un processus précis à la fois. En production, pas en diaporama.',
+    /*
+      Chaque exemple décrit une chaîne complète, de la première demande au
+      dossier fermé — jamais un geste isolé. Rien de technique en surface. Le
+      bénéfice (temps repris, précision, coûts, croissance sans embauche
+      proportionnelle) se lit dans la formulation ; il n’est jamais listé tel
+      quel.
+    */
     items: [
       {
         eyebrow: 'Recherche',
-        title: 'Retrouver un document en secondes',
+        title: 'Vos documents répondent à vos questions',
         gain: 'Vos équipes arrêtent de fouiller.',
+        examples: [
+          'Interroger toute votre documentation en langage simple et obtenir la bonne réponse, sourcée',
+          'Résumer et comparer des documents longs — contrats, dossiers, rapports — en secondes',
+          'Réunir l’information éparpillée dans tous vos outils en une seule source fiable',
+        ] as Tuple3<string>,
       },
       {
         eyebrow: 'Automatisation',
-        title: 'Des courriels triés tout seuls',
-        gain: 'Plus rien ne tombe entre deux chaises.',
+        title: 'Vos processus tournent de bout en bout',
+        gain: 'De la première demande jusqu’au dossier fermé, sans intervention manuelle.',
+        examples: [
+          'Qualification et acheminement des demandes entrantes : chaque prospect est évalué et dirigé vers la bonne personne, instantanément',
+          'Accueil client complet : dès la signature, le dossier se crée, les accès s’ouvrent et les étapes se lancent seules',
+          'Traitement des factures et des documents : lecture, vérification, rapprochement avec les commandes et classement, sans saisie',
+          'Planification et coordination : rendez-vous, rappels et disponibilités gérés automatiquement',
+          'Consolidation des données et tableaux de bord : vos chiffres se rassemblent seuls, à jour en temps réel',
+        ] as Tuple5<string>,
       },
       {
         eyebrow: 'Rédaction',
-        title: 'Des réponses prêtes à envoyer',
-        gain: 'Vous relisez au lieu de rédiger.',
+        title: 'Vos documents se préparent seuls',
+        gain: 'Vous validez, vous ne partez pas de zéro.',
+        examples: [
+          'Documents et contrats standards générés à partir du dossier, prêts à réviser',
+          'Rapports clients et rapports de gestion montés automatiquement à partir de vos données',
+          'Réponses aux demandes récurrentes préparées d’avance, à votre nom et selon vos règles',
+        ] as Tuple3<string>,
       },
       {
+        /* La carte différenciatrice : la gouvernance est exactement ce qu’un
+           outil grand public ne donnera jamais. « périmètre » reste le mot
+           juste — il couvre autant vos serveurs que votre propre locataire
+           Azure. Ne pas durcir en « vos données ne sortent jamais de votre
+           infrastructure ». */
         eyebrow: 'Contrôle',
-        title: 'Un seul endroit pour tout encadrer',
-        gain: 'Vous savez qui utilise quoi, et à quel coût.',
+        title: 'Vos politiques d’IA, sous votre contrôle total',
+        gain: 'Gouvernance complète : vous décidez qui utilise quoi, comment, et à quel coût.',
+        examples: [
+          'Politiques d’IA appliquées à l’échelle de l’entreprise : règles d’usage, accès par rôle, garde-fous',
+          'Chaque équipe accède seulement aux données et aux outils qui la concernent',
+          'Coûts d’IA suivis, plafonnés et attribués, sans surprise',
+          'Conformité et traçabilité : chaque action est encadrée et journalisée',
+          'Tout reste dans votre périmètre. Rien ne sort.',
+        ] as Tuple5<string>,
       },
-    ] as Tuple4<ServiceCard>,
+    ] satisfies Tuple4<ServiceCard>,
   },
 
   demo: {

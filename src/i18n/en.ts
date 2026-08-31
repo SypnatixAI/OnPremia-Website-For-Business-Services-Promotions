@@ -14,6 +14,7 @@ import type {
   Tuple2,
   Tuple3,
   Tuple4,
+  Tuple5,
 } from './types'
 
 /**
@@ -147,25 +148,49 @@ export const en: Dictionary = {
     items: [
       {
         eyebrow: 'Search',
-        title: 'Find a document in seconds',
-        gain: 'Your team stops digging.',
+        title: 'Your documents answer your questions',
+        gain: 'Your teams stop digging.',
+        examples: [
+          'Ask your entire documentation in plain language and get the right answer, with its source',
+          'Summarize and compare long documents — contracts, files, reports — in seconds',
+          'Pull the information scattered across all your tools into one reliable source',
+        ] as Tuple3<string>,
       },
       {
         eyebrow: 'Automation',
-        title: 'Email that sorts itself',
-        gain: 'Nothing falls through the cracks.',
+        title: 'Your processes run end to end',
+        gain: 'From the first request to the closed file, with no manual step.',
+        examples: [
+          'Incoming requests qualified and routed: every prospect is assessed and sent to the right person, instantly',
+          'Full client onboarding: the moment it is signed, the file is created, access opens and the steps start on their own',
+          'Invoices and documents handled: read, verified, matched against orders and filed, with no data entry',
+          'Scheduling and coordination: appointments, reminders and availability handled automatically',
+          'Data and dashboards consolidated: your numbers come together on their own, current in real time',
+        ] as Tuple5<string>,
       },
       {
         eyebrow: 'Drafting',
-        title: 'Replies ready to send',
-        gain: 'You review instead of writing.',
+        title: 'Your documents prepare themselves',
+        gain: 'You approve instead of starting from a blank page.',
+        examples: [
+          'Standard documents and contracts generated from the file, ready to review',
+          'Client reports and management reports built automatically from your own data',
+          'Answers to recurring requests prepared in advance, in your name and by your rules',
+        ] as Tuple3<string>,
       },
       {
         eyebrow: 'Control',
-        title: 'One place to govern it all',
-        gain: 'You know who uses what, and what it costs.',
+        title: 'Your AI policies, fully under your control',
+        gain: 'Complete governance: you decide who uses what, how, and at what cost.',
+        examples: [
+          'AI policies enforced across the company: rules of use, access by role, guardrails',
+          'Each team reaches only the data and the tools that concern it',
+          'AI costs tracked, capped and attributed, with no surprises',
+          'Compliance and traceability: every action is governed and logged',
+          'Everything stays inside your perimeter. Nothing leaves it.',
+        ] as Tuple5<string>,
       },
-    ] as Tuple4<ServiceCard>,
+    ] satisfies Tuple4<ServiceCard>,
   },
 
   demo: {
