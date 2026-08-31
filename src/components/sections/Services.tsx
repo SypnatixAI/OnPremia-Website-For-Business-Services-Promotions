@@ -13,8 +13,17 @@ const ICONS = [FileSearch, Workflow, PenLine, ShieldCheck] as const
  * from the first request to the closed file. Nothing here names a technique:
  * that conversation belongs in the audit.
  *
- * The list is deliberately quiet (small, muted, hairline-separated) so the
- * result line stays the thing you read first.
+ * The four boxes are deliberately identical in size:
+ *
+ * - `auto-rows-fr` makes every grid row the same height, so the 3-example
+ *   cards match the 5-example ones instead of each row sizing to its own
+ *   tallest card.
+ * - Title and gain each reserve two lines (`min-h-[2lh]`), so the hairline and
+ *   the list start at the same y in all four cards whether or not a line
+ *   wraps. Without it the boxes are the same height but out of rhythm inside.
+ *
+ * Only min-height is fixed, never height: longer copy still grows the row
+ * rather than being clipped.
  */
 export function Services() {
   const t = useT()
@@ -27,12 +36,12 @@ export function Services() {
         lead={t.services.lead}
       />
 
-      <Stagger className="mt-16 grid items-start gap-5 sm:grid-cols-2">
+      <Stagger className="mt-16 grid gap-5 sm:auto-rows-fr sm:grid-cols-2">
         {t.services.items.map((service, i) => {
           const Icon = ICONS[i] ?? FileSearch
           return (
-            <StaggerItem key={service.title} hover>
-              <Card className="group border-[var(--color-hairline)] shadow-none transition-colors hover:border-[var(--color-indigo-brand)]/40">
+            <StaggerItem key={service.title} className="h-full" hover>
+              <Card className="group h-full border-[var(--color-hairline)] shadow-none transition-colors hover:border-[var(--color-indigo-brand)]/40">
                 <CardContent>
                   <div className="flex items-center gap-2.5">
                     <Icon
@@ -45,10 +54,12 @@ export function Services() {
                     </span>
                   </div>
 
-                  <h3 className="mt-5 font-display text-2xl text-[var(--color-ink)]">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-[var(--color-slate-muted)]">{service.gain}</p>
+                  <div className="mt-5">
+                    <h3 className="font-display text-2xl text-[var(--color-ink)] sm:min-h-[2lh]">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-[var(--color-slate-muted)] sm:min-h-[2lh]">{service.gain}</p>
+                  </div>
 
                   {/* Inherits the card's variant state — no viewport hook of its own. */}
                   <m.ul
