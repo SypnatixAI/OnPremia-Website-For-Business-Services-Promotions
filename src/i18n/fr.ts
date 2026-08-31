@@ -8,12 +8,12 @@ import type {
   OutcomeCard,
   ProcessPhase,
   ServiceCard,
+  ServicePoint,
   SourcedClaim,
   Stat,
   Tuple2,
   Tuple3,
   Tuple4,
-  Tuple5,
 } from './types'
 
 /**
@@ -158,44 +158,72 @@ export const fr = {
     title: 'Quatre systèmes qui travaillent pour vous.',
     lead: 'Un processus précis à la fois. En production, pas en diaporama.',
     /*
-      Chaque exemple décrit une chaîne complète, de la première demande au
-      dossier fermé — jamais un geste isolé. Rien de technique en surface. Le
-      bénéfice (temps repris, précision, coûts, croissance sans embauche
-      proportionnelle) se lit dans la formulation ; il n’est jamais listé tel
-      quel.
+      Trois points par carte, jamais plus : c’est ce qui garde les quatre
+      boîtes identiques. `label` tient sur une ligne et se lit d’un coup d’œil ;
+      `detail` est la phrase qui apparaît au survol et décrit la chaîne
+      complète, de la première demande au dossier fermé. Aucun terme technique
+      en surface. Le bénéfice (temps repris, précision, coûts, croissance sans
+      embauche proportionnelle) se lit dans la formulation ; il n’est jamais
+      listé tel quel.
     */
+    detailCta: 'Voir le détail',
     items: [
       {
         eyebrow: 'Recherche',
         title: 'Vos documents répondent à vos questions',
         gain: 'Vos équipes arrêtent de fouiller.',
-        examples: [
-          'Interroger toute votre documentation en langage simple et obtenir la bonne réponse, sourcée',
-          'Résumer et comparer des documents longs — contrats, dossiers, rapports — en secondes',
-          'Réunir l’information éparpillée dans tous vos outils en une seule source fiable',
-        ] as Tuple3<string>,
+        points: [
+          {
+            label: 'Toute votre documentation, interrogeable en langage simple',
+            detail: 'Vous posez la question en français ; la bonne réponse arrive avec sa source.',
+          },
+          {
+            label: 'Contrats et rapports résumés en secondes',
+            detail: 'Résumés et comparés entre eux, même les dossiers les plus longs.',
+          },
+          {
+            label: 'L’information éparpillée réunie en une source fiable',
+            detail: 'Ce qui vit dans tous vos outils, rassemblé en un seul endroit.',
+          },
+        ] as Tuple3<ServicePoint>,
       },
       {
         eyebrow: 'Automatisation',
         title: 'Vos processus tournent de bout en bout',
-        gain: 'De la première demande jusqu’au dossier fermé, sans intervention manuelle.',
-        examples: [
-          'Qualification et acheminement des demandes entrantes : chaque prospect est évalué et dirigé vers la bonne personne, instantanément',
-          'Accueil client complet : dès la signature, le dossier se crée, les accès s’ouvrent et les étapes se lancent seules',
-          'Traitement des factures et des documents : lecture, vérification, rapprochement avec les commandes et classement, sans saisie',
-          'Planification et coordination : rendez-vous, rappels et disponibilités gérés automatiquement',
-          'Consolidation des données et tableaux de bord : vos chiffres se rassemblent seuls, à jour en temps réel',
-        ] as Tuple5<string>,
+        gain: 'De la première demande au dossier fermé.',
+        points: [
+          {
+            label: 'Demandes entrantes qualifiées et acheminées',
+            detail: 'Chaque prospect est évalué et dirigé vers la bonne personne, instantanément.',
+          },
+          {
+            label: 'Accueil client complet, dès la signature',
+            detail: 'Le dossier se crée, les accès s’ouvrent et les étapes se lancent seules.',
+          },
+          {
+            label: 'Factures et données traitées sans saisie',
+            detail: 'Lues, vérifiées, rapprochées des commandes et classées ; vos chiffres se rassemblent seuls.',
+          },
+        ] as Tuple3<ServicePoint>,
       },
       {
         eyebrow: 'Rédaction',
         title: 'Vos documents se préparent seuls',
-        gain: 'Vous validez, vous ne partez pas de zéro.',
-        examples: [
-          'Documents et contrats standards générés à partir du dossier, prêts à réviser',
-          'Rapports clients et rapports de gestion montés automatiquement à partir de vos données',
-          'Réponses aux demandes récurrentes préparées d’avance, à votre nom et selon vos règles',
-        ] as Tuple3<string>,
+        gain: 'Vous validez, vous ne rédigez plus.',
+        points: [
+          {
+            label: 'Contrats et documents pré-remplis, prêts à réviser',
+            detail: 'Générés à partir du dossier ; il ne reste qu’à relire et signer.',
+          },
+          {
+            label: 'Rapports clients montés automatiquement',
+            detail: 'Rapports clients et rapports de gestion, montés à partir de vos données.',
+          },
+          {
+            label: 'Réponses récurrentes préparées à votre nom',
+            detail: 'Préparées d’avance, à votre nom et selon vos règles.',
+          },
+        ] as Tuple3<ServicePoint>,
       },
       {
         /* La carte différenciatrice : la gouvernance est exactement ce qu’un
@@ -204,15 +232,22 @@ export const fr = {
            Azure. Ne pas durcir en « vos données ne sortent jamais de votre
            infrastructure ». */
         eyebrow: 'Contrôle',
-        title: 'Vos politiques d’IA, sous votre contrôle total',
-        gain: 'Gouvernance complète : vous décidez qui utilise quoi, comment, et à quel coût.',
-        examples: [
-          'Politiques d’IA appliquées à l’échelle de l’entreprise : règles d’usage, accès par rôle, garde-fous',
-          'Chaque équipe accède seulement aux données et aux outils qui la concernent',
-          'Coûts d’IA suivis, plafonnés et attribués, sans surprise',
-          'Conformité et traçabilité : chaque action est encadrée et journalisée',
-          'Tout reste dans votre périmètre. Rien ne sort.',
-        ] as Tuple5<string>,
+        title: 'Vos politiques d’IA, sous votre contrôle',
+        gain: 'Vous décidez qui utilise quoi, et à quel coût.',
+        points: [
+          {
+            label: 'Règles d’usage et accès par rôle',
+            detail: 'Vos politiques appliquées à l’échelle de l’entreprise, garde-fous compris.',
+          },
+          {
+            label: 'Coûts d’IA suivis et plafonnés',
+            detail: 'Suivis, plafonnés et attribués à chaque équipe, sans surprise.',
+          },
+          {
+            label: 'Tout reste dans votre périmètre. Rien ne sort.',
+            detail: 'Chaque action encadrée et journalisée, sur vos serveurs ou votre Azure.',
+          },
+        ] as Tuple3<ServicePoint>,
       },
     ] satisfies Tuple4<ServiceCard>,
   },

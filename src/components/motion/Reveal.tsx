@@ -108,21 +108,3 @@ export function StaggerItem({
     </m.div>
   )
 }
-
-/**
- * Nested cascade for the small example lists inside a card.
- *
- * A child with `variants` inherits the parent's variant state, so these need
- * no `whileInView` of their own: the card reveals, then its lines follow.
- * Lighter and quicker than the card entrance on purpose — the two shouldn't
- * compete, and reduced-motion users get neither (MotionConfig handles it).
- */
-export const subStaggerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.12 } },
-}
-
-export const subItemVariants: Variants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: EASE } },
-}

@@ -12,7 +12,6 @@ export function isLocale(value: string): value is Locale {
 export type Tuple2<T> = readonly [T, T]
 export type Tuple3<T> = readonly [T, T, T]
 export type Tuple4<T> = readonly [T, T, T, T]
-export type Tuple5<T> = readonly [T, T, T, T, T]
 
 export type DeploymentMode = {
   label: string
@@ -55,16 +54,28 @@ export type SourcedClaim = {
 }
 
 /**
- * Title is the result the client gets, `gain` is what it buys. `examples` is
- * the evidence: each line must describe a COMPLETE business process, first
- * request to closed file — never a single isolated gesture, never a technique.
- * Length is fixed per card by a tuple in fr.ts, so EN cannot ship fewer.
+ * One point on a service card: `label` is the one-line version that is always
+ * on screen, `detail` the sentence revealed on hover/tap. `detail` completes
+ * the label — it never repeats it, and it never introduces a claim the label
+ * doesn’t already make.
+ */
+export type ServicePoint = {
+  label: string
+  detail: string
+}
+
+/**
+ * Title is the result the client gets, `gain` is what it buys. Exactly three
+ * points, always: that fixed count is what keeps the four boxes identical, and
+ * the tuple makes a fourth one a compile error rather than a broken grid.
+ * Each point describes a COMPLETE business process, first request to closed
+ * file — never a single isolated gesture, never a technique.
  */
 export type ServiceCard = {
   eyebrow: string
   title: string
   gain: string
-  examples: readonly string[]
+  points: Tuple3<ServicePoint>
 }
 
 export type ComparisonRow = {
