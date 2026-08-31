@@ -65,7 +65,7 @@ function Slider({
         className="mt-3 w-full cursor-pointer accent-[var(--color-indigo-brand)]"
       />
       {note ? (
-        <p id={noteId} className="mt-2 text-xs leading-relaxed text-[var(--color-slate-muted)]">
+        <p id={noteId} className="mt-2 text-sm font-semibold text-[var(--color-ink)]">
           {note}
         </p>
       ) : null}
@@ -77,8 +77,9 @@ function Slider({
  * Time-saved estimator. Every number on screen belongs to the VISITOR'S
  * company — their email volume, their admin hours, what an hour of their
  * staff's time costs them — and every label says so. Nothing here is an
- * OnPremia price. The hourly-cost field carries an explicit note for that
- * reason: it is the one number a reader can mistake for our rate.
+ * OnPremia price. Both panels are titled — "your numbers" going in, "what
+ * your business gets back" coming out — and the hourly-cost field carries a
+ * note in bold, because it is the one number a reader can misread.
  *
  * The two coefficients behind the number live in `lib/savings.ts` and are
  * spelled out under the result — an estimate a visitor can't audit is just a
@@ -104,7 +105,15 @@ export function Calculator() {
       <Reveal className="mt-12">
         <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
           <div className="rounded-lg border border-[var(--color-hairline)] bg-[var(--color-paper)] p-7 md:p-9">
-            <div className="space-y-7">
+            {/* Titled panels: left is what the visitor puts in, right is what
+                they get out. Nobody should have to infer whose numbers these
+                are from the field labels alone. */}
+            <p className="text-xs font-semibold tracking-[0.14em] text-[var(--color-indigo-brand)] uppercase">
+              {c.inputsTitle}
+            </p>
+            <p className="mt-1.5 text-sm text-[var(--color-slate-muted)]">{c.inputsHint}</p>
+
+            <div className="mt-7 space-y-7 border-t border-[var(--color-hairline)] pt-7">
               <Slider
                 label={c.emailsLabel}
                 value={emails}
@@ -124,7 +133,7 @@ export function Calculator() {
                 value={hourlyRate}
                 onChange={setHourlyRate}
                 display={formatMoney(hourlyRate, locale)}
-                // Mandatory: without it, "35 $" reads as an OnPremia rate.
+                // The one number a reader can misread; the note says whose hour it is.
                 note={c.rateNote}
                 {...RANGES.hourlyRate}
               />
@@ -137,12 +146,14 @@ export function Calculator() {
           </div>
 
           <div className="flex flex-col rounded-lg bg-[var(--color-feature)] p-7 text-white md:p-9">
-            <div className="space-y-6">
+            <p className="text-xs font-semibold tracking-[0.14em] text-indigo-300 uppercase">
+              {c.resultsTitle}
+            </p>
+
+            <div className="mt-7 space-y-6 border-t border-white/12 pt-7">
               <div>
-                <p className="text-xs font-semibold tracking-[0.14em] text-indigo-300 uppercase">
-                  {c.weeklyLabel}
-                </p>
-                <p className="font-display mt-1 text-5xl leading-none font-semibold md:text-6xl">
+                <p className="text-sm text-slate-300">{c.weeklyLabel}</p>
+                <p className="font-display mt-2 text-5xl leading-none font-semibold md:text-6xl">
                   {/* Counts up once, the first time it scrolls into view.
                       After that it tracks the sliders instantly. */}
                   <CountUp value={weeklyHours} format={(n) => formatHours(n, locale)} />
