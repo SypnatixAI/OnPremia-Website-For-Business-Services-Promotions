@@ -87,7 +87,7 @@ degrades to something sensible. These are the real gaps:
 | `LINKEDIN_URL` | the link is hidden rather than 404ing |
 
 `SITE_URL` and `CONTACT_EMAIL` are set to `onpremia.ca` /
-`bonjour@onpremia.ca` — confirm both.
+`team.onpremia@gmail.com` — confirm both.
 
 **Content that can't be invented:**
 

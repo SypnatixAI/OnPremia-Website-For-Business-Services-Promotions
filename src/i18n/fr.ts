@@ -523,7 +523,7 @@ export const fr = {
       submit: 'Envoyer',
       submitting: 'Envoi en cours…',
       success: 'Message reçu. Nous vous répondons sous 24 h.',
-      error: 'L’envoi a échoué. Écrivez-nous directement à bonjour@onpremia.ca.',
+      error: 'L’envoi a échoué. Écrivez-nous directement à team.onpremia@gmail.com.',
       errors: {
         nameRequired: 'Entrez votre nom.',
         emailInvalid: 'Entrez une adresse courriel valide.',

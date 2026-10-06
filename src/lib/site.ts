@@ -27,7 +27,7 @@ export function absoluteUrl(path: string) {
   return `${SITE_ORIGIN}${withBase(path)}`
 }
 
-export const CONTACT_EMAIL = 'bonjour@onpremia.ca'
+export const CONTACT_EMAIL = 'team.onpremia@gmail.com'
 
 /**
  * Booking link. Until a real one exists, every "book a call" CTA points at the

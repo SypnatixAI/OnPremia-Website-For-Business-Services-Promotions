@@ -488,7 +488,7 @@ export const en: Dictionary = {
       submit: 'Send',
       submitting: 'Sending…',
       success: 'Message received. We’ll reply within 24 hours.',
-      error: 'Sending failed. Email us directly at bonjour@onpremia.ca.',
+      error: 'Sending failed. Email us directly at team.onpremia@gmail.com.',
       errors: {
         nameRequired: 'Enter your name.',
         emailInvalid: 'Enter a valid email address.',
